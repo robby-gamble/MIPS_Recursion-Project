@@ -1,14 +1,9 @@
 .data
-
-.text
-.global main 
-.ent main
 message1: .asciiz "Input 20 characters max.\n" #I'll need this to communicate with the user
 message2: .asciiz "Output\n" #I'll display this after I finish converting everything
 message3: .asciiz "Invalid Input.\n" #I'll display this aft
 buffer: .space 64
-
-
+.text
 
 main:
 #I'm about to ask the user to input characters
@@ -37,6 +32,11 @@ addi $t4,$t4,1                    #increaseing the value of my string length by 
 j count                           #restarts my count loop
 exit: jr $ra
 
+
+li $v0,4
+li $a0,0
+la $a0, message2        #about to print 'output:'
+syscall  
 
 
 li $v0,10
