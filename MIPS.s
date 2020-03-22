@@ -31,7 +31,11 @@ count: li $t3,0
 addu $t3,$t3,$t7                  #$t3 = my iterator
 addu $t3,$t3,$a1                  #$t3 = position in my string
 lbu $a2,($t3)                     #loads position to $a2
-
+beq $a2,0,exit                    #check for a NULL value
+addi $t0,$t0,1                    #increment my iterator by 1
+addi $t4,$t4,1                    #increaseing the value of my string length by 1
+j count                           #restarts my count loop
+exit: jr $ra
 
 
 
