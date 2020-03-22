@@ -26,6 +26,12 @@ addi $t1,$t1,1      #trigger for loop 1: continues looping, 0: haults the loop
 addi $t2,$t2,0      #length of my string
 
 lengthOfString:
+li $t2,0                          #setting the intital value of my string's length to 0 string length
+count: li $t3,0
+addu $t3,$t3,$t7                  #$t3 = my iterator
+addu $t3,$t3,$a1                  #$t3 = position in my string
+lbu $a2,($t3)                     #loads position to $a2
+
 
 
 
