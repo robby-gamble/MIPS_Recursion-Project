@@ -16,16 +16,23 @@ la $a0, buffer #storing space for the string
 li $a1, 21 #allocating byte space for string to be stored
 syscall #executing command
 
-addi $t0,$t0,0      #initializing my counter
+
+li $t0, 0 # initialize the count to zero
 addi $t1,$t1,1      #trigger for loop 1: continues looping, 0: haults the loop
 addi $t2,$t2,0      #length of my string
 
 lengthOfString:
+lbu $t1, 0($a0) # load the next character into t1
+beqz $t1, exit # check for the null character
+addi $a0, $a0, 1 # increment the string pointer
+addi $t0, $t0, 1 # increment the count
+j loop # return to the top of the loop
+exit:
 li $t2,0                          #setting the intital value of my string's length to 0 string length
 count: li $t3,0
 addu $t3,$t3,$t7                  #$t3 = my iterator
 addu $t3,$t3,$a1                  #$t3 = position in my string
-lbu $a2,($t3)                     #loads position to $a2
+lb $a2,($t3)                     #loads position to $a2
 beq $a2,0,exit                    #check for a NULL value
 addi $t0,$t0,1                    #increment my iterator by 1
 addi $t4,$t4,1                    #increaseing the value of my string length by 1
@@ -39,6 +46,6 @@ la $a0, message2        #about to print 'output:'
 syscall  
 
 
+end:
 li $v0,10
 syscall
-.end main
