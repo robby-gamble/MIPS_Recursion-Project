@@ -195,6 +195,20 @@ li $v0, 1
 lw $a0, 0($sp) #prints element
 syscall
 
+commas:
+beq $t2, 0, exit #ends program if there arent other values.
+li $v0, 4
+la $a0, comma #prints comma
+syscall
+j end
+
+invalprint:
+
+li $v0, 4
+la $a0, notvalid #prints not valid symbol
+syscall
+j commas #jumps commas
+
 
 
 li $v0,4
