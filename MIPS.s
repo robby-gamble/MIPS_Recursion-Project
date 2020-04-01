@@ -125,6 +125,51 @@ beq $s0,44, invalloop #checks if the next bit is a comma
 li $t3,0 #resets my space/tabs checker back to zero
 j run
 
+SubB:
+beq $t4,0,stoprunning #check how many charcter are left to convert
+addi $t4,$t4,-1 #decreases char to conert count
+lb $s0, ($t5) # loads bit to convert
+
+addi $t5,$t5,1    # increments element in array
+j SubC
+
+continue:
+sw $s1,0($sp)    #stores the converted number
+j SubB
+
+SubC:
+move $t9, $t4    #stores the amount of characters as an exponent
+li $t8, 1    # $t8 represents 33 to a certian power and set equal to 1
+ble $s0, 57, number #sorts the bit to the apporiate function
+ble $s0, 88, uppercase
+ble $s0, 120, lowercase
+
+number:
+sub $s0, $s0, 48    #converts interger
+beq $t4, 0, concat    # if no hay chars exponent is zero
+li $t8, 33
+j expon
+
+uppercase:
+sub $s0, $s0, 55    #converts uppercase
+beq $t4, 0, concat    # if no hay chars exponent is zero
+li $t8, 33
+j expon
+
+lowercase:
+sub $s0, $s0, 87    #converts lowercase
+beq $t4, 0, concat    # if no hay chars exponent is zero
+li $t8, 33
+j expon
+
+expon:
+
+#raise my base to an exponent by multiplying it by itself
+ble $t9, 1, concat    #if exp  is 1 dont multiply by itself
+mul $t8, $t8, 33     # multpling my base by itself
+addi $t9, $t9, -1    # decrement the exponent
+j expon
+
 
 
 li $v0,4
