@@ -1,10 +1,12 @@
 .data
-output: .asciiz "Output\n" #I'll display this after I finish converting everything
-notvalid: .asciiz "Invalid Input.\n" #I'll display this aft
+
 data: .space 1001
+output: .asciiz"\n"
+notvalid: .asciiz "NaN"
 comma: .asciiz ","
 
 .text
+main:
 
 li $v0, 8
 la $a0, data #Getting User Input
@@ -62,7 +64,6 @@ ble $s0, 88, isvalid    # checks for my capital letters
 ble $s0, 96, invalloop # checks for ascii less than 96
 ble $s0, 120, isvalid     # checks for lowercase letters
 bge $s0, 121, invalloop # checks for ascii greater than 120
-
 
 gap:
 
@@ -124,6 +125,7 @@ beq $s0, 10, cont1 #checks if the bit is a new line
 beq $s0,44, invalloop #checks if the next bit is a comma
 li $t3,0 #resets my space/tabs checker back to zero
 j run
+
 
 SubB:
 beq $t4,0,stoprunning #check how many charcter are left to convert
@@ -211,12 +213,7 @@ j commas #jumps commas
 
 
 
-li $v0,4
-li $a0,0
-la $a0, message2        #about to print 'output:'
-syscall  
 
-
-end:
-li $v0,10
+exit:
+li $v0, 10
 syscall
