@@ -105,6 +105,26 @@ li $t4,0 #resets the amount of valid characters to 0
 li $t3,0 #resets my space checker  to 0
 j run
 
+substring:
+mul $t3,$t3,$t0 #if hay space before valid character $t3 is a positive number
+
+next:
+bgt $t3,0,insidesubstring #checks for spaces or tabs in between valid characters
+bge $t4,5,insidesubstring #checks for  more than 4 for characters
+addi $t2,$t2,1 # track of the amount substring
+sub $sp, $sp,4 # creates space in  stack
+sw $t7, 0($sp) #stores $t7 into the stack
+move $t7,$t1  # storing pointer
+lw $t5,0($sp) #load stack at that posistion to $t5
+li $s1,0 #sets $s1 to 0
+jal SubB
+lb $s0, ($t1) # loads the bit that $t0 is pointing to
+beq $s0, 0, cont1 # check if the bit is null
+beq $s0, 10, cont1 #checks if the bit is a new line
+beq $s0,44, invalloop #checks if the next bit is a comma
+li $t3,0 #resets my space/tabs checker back to zero
+j run
+
 
 
 li $v0,4
