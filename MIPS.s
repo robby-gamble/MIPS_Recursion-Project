@@ -64,6 +64,29 @@ ble $s0, 120, isvalid     # checks for lowercase letters
 bge $s0, 121, invalloop # checks for ascii greater than 120
 
 
+gap:
+
+addi $t3,$t3,-1 #tracking spaces/tabs
+j loop
+
+isvalid:
+
+addi $t4, $t4,1 #tracking valid characters
+mul $t3,$t3,$t0 #if there was a space before a valid character it will change $t3 to a positive number
+j loop #jumps to the beginning of loop
+
+
+
+
+invalloop:
+
+lb $s0, ($t1) # loads the bit that $t1 is pointing to
+beq $s0, 0, insidesubstring
+beq $s0, 10, insidesubstring
+addi $t1,$t1,1
+beq $s0, 44, insidesubstring
+
+j invalloop #jumps to the beginning of loop
 
 
 
