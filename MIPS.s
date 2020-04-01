@@ -38,6 +38,33 @@ move $t7, $t1 #stores first non-space/tab character
 j loop # starts loop over
 
 
+skip:
+addi $t1,$t1,1 #move $t1 to the next element
+j run
+
+loop:
+
+
+lb $s0, ($t1) # loads the bit that $t0 is pointing to
+beq $s0, 0,next# check for null
+beq $s0, 10, next #checks for new line
+addi $t1,$t1,1 #move the $t1 to the next element
+beq $s0, 44, substring #check if bit is a comma
+
+check:
+bgt $t3,0, invalloop #checks to see if I have spaces or tabs between my valid characters:
+beq $s0, 9,  gap #checks for tab characters
+beq $s0, 32, gap #checks for  space character
+ble $s0, 47, invalloop # checks for ascii less than 48
+ble $s0, 57, isvalid # checks for integers
+ble $s0, 64, invalloop # checksfor ascii less than 64
+ble $s0, 88, isvalid    # checks for my capital letters
+ble $s0, 96, invalloop # checks for ascii less than 96
+ble $s0, 120, isvalid     # checks for lowercase letters
+bge $s0, 121, invalloop # checks for ascii greater than 120
+
+
+
 
 
 
