@@ -89,6 +89,21 @@ beq $s0, 44, insidesubstring
 j invalloop #jumps to the beginning of loop
 
 
+insidesubstring:
+
+addi $t2,$t2,1 #amount of substring
+sub $sp, $sp,4# creating space in stack
+
+sw $t0, 0($sp) #puts $t7 into the stack
+
+move $t7,$t1  # store the pointer to the bit after the comma
+lb $s0, ($t1) # loads the bit that $t1 is -> to
+beq $s0, 0, cont1 #
+beq $s0, 10, cont1
+beq $s0,44, invalloop
+li $t4,0 #resets the amount of valid characters to 0
+li $t3,0 #resets my space checker  to 0
+j run
 
 
 
